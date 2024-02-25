@@ -41,12 +41,12 @@ jobs:
           - name: Deploy to GitHub Pages
             uses: JamesIves/github-pages-deploy-action@v4.5.0
             with:
-              token: PushPagesToCodeBlog
+              token: "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"
               branch: main
               folder: public
               commit-message: update pages
               clean: true
-              git-config-name: 3000ye
-              git-config-email: hcg2924239214@163.com
+              git-config-name: "3000ye"
+              git-config-email: "hcg2924239214@163.com"
               repository-name: 3000ye/codeBlogPage
               single-commit: true
