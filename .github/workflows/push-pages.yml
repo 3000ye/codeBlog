@@ -41,7 +41,7 @@ jobs:
           - name: Deploy to GitHub Pages
             uses: JamesIves/github-pages-deploy-action@v4.5.0
             with:
-              token: "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"
+              token: ${{ secrets.GITHUB_TOKEN }}
               branch: main
               folder: public
               commit-message: update pages
