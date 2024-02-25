@@ -1,6 +1,6 @@
 languageCode = "en-us"
 baseurl      = "http://code.3000ye.com"
-title        = "3000ye Code Blog"
+title        = "3000ye's Code Blog"
 
 disableKinds = ["taxonomy"]
 
