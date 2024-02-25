@@ -1,3 +1,55 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+languageCode = "en-us"
+baseurl      = "http://code.3000ye.com"
+title        = "3000ye Code Blog"
+
+disableKinds = ["taxonomy"]
+
+# Code higlighting settings
+pygmentsCodefences            = true
+pygmentsCodeFencesGuesSsyntax = false
+pygmentsOptions               = ""
+pygmentsStyle                 = "monokai"
+pygmentsUseClasses            = false
+
+defaultContentLanguage = "en"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      autoHeadingIDType = "github-ascii"
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[module]
+  [module.hugoVersion]
+  [[module.imports]]
+    # This is replaced in go.mod to point to the directory above.
+    path = "github.com/bep/docuapi/v2"
+
+[params]
+  search       = true
+  maxMenuDepth = 3    # (optional) available options are: 1, 2, or 3 (default: 2)
+
+  # Configure the language example tabs.
+  [[params.language_tabs]]
+    key  = "cpp"
+    name = "Method One"
+  [[params.language_tabs]]
+    key  = "c"
+    name = "Method Two"
+  [[params.language_tabs]]
+    key  = "java"
+    name = "Method Three"
+
+#Languages 
+[languages]
+
+[languages.en]
+    languageName = "English"
+    weight       = 2
+    title        = "3000ye Code Blog"
+    [languages.en.params]
+        # Left sidebar footer items. Use HTMl or Markdown.
+        toc_footers = [
+        "<a href='https://3000ye.com'>3000ye Blog</a>",
+        ]
