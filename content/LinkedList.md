@@ -1,6 +1,6 @@
 ---
 weight: 1
-title: LeetCode
+title: Linked List
 math: true
 ---
 
@@ -262,6 +262,11 @@ public:
 
 ### 题面
 
+给你一个链表 `head` 和一个整数 `val`，请删除链表中 `p->val == val` 的节点。
+
 ### 题解
 
-# Stack
+**Method One**: 直接法
+
+- 首先特判头节点的值 `head->val` 是否等于 `val`
+- 然后遍历链表，将 `p->val == val` 的节点删掉
