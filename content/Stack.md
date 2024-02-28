@@ -195,7 +195,35 @@ public:
 
 ## 1087. Occurrences After Bigram
 
+```cpp
+class Solution {
+public:
+    vector<string> findOcurrences(string text, string first, string second) {
+        stack<string> stk;
+        vector<string> res;
 
+        string x, y, temp = "";
+        text = text + " ";
+
+        for (auto c : text) {
+            if (c == ' ') {
+                if (!stk.empty()) {
+                    x = stk.top(); stk.pop();
+                    if (!stk.empty()) y = stk.top();
+                    stk.push(x);
+                }
+                
+                if (x == second and y == first) res.push_back(temp);
+
+                stk.push(temp); temp = "";
+            }
+            else temp += c;
+        }
+
+        return res;
+    }
+};
+```
 
 ### 题面
 
@@ -205,3 +233,44 @@ public:
 
 ### 题解
 
+**Method One**: 直接法
+
+- 维护一个栈来记录 `text` 中的单词（在 `text` 后面加一个空格可以遍历所有单词）
+- 走到空格的时候，就检查一下当前的 `temp` 是否满足 `third` 的条件
+- 需注意判断 `third` 时需要将栈恢复原样
+
+## 1128. Number of Equivalent Domino Pairs
+
+```cpp
+class Solution {
+public:
+    int numEquivDominoPairs(vector<vector<int>>& dominoes) {
+        int cnt[110];
+        for (auto i : dominoes) {
+            if (i[0] < i[1]) cnt[i[0] * 10 + i[1]] ++;
+            else cnt[i[1] * 10 + i[0]] ++;
+        }
+
+        int res = 0;
+        for (auto i : cnt) {
+            if (i <= 1) continue;
+            res += i * (i - 1) / 2;
+        }
+
+        return res;
+    }
+};
+```
+
+### 题面
+
+形式上，`dominoes[i] = [a, b]` 与 `dominoes[j] = [c, d]` **等价** 当且仅当 (`a == c` 且 `b == d`) 或者 (`a == d` 且 `b == c`) 。即一张骨牌可以通过旋转 `0` 度或 `180` 度得到另一张多米诺骨牌。
+
+在 `0 <= i < j < dominoes.length` 的前提下，找出满足 `dominoes[i]` 和 `dominoes[j]` 等价的骨牌对 `(i, j)` 的数量。
+
+### 题解
+
+**Method One**: 直接法
+
+- 对于每张牌的两个数值排序，得到一个唯一值
+- 记录这个值出现的次数，即得到最终的对数
