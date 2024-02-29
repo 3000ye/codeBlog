@@ -193,84 +193,41 @@ public:
 
 - 用栈模拟题面的操作
 
-## 1087. Occurrences After Bigram
+## 844. Backspace String Compare
 
 ```cpp
 class Solution {
 public:
-    vector<string> findOcurrences(string text, string first, string second) {
-        stack<string> stk;
-        vector<string> res;
-
-        string x, y, temp = "";
-        text = text + " ";
-
-        for (auto c : text) {
-            if (c == ' ') {
-                if (!stk.empty()) {
-                    x = stk.top(); stk.pop();
-                    if (!stk.empty()) y = stk.top();
-                    stk.push(x);
-                }
-                
-                if (x == second and y == first) res.push_back(temp);
-
-                stk.push(temp); temp = "";
+    bool backspaceCompare(string s, string t) {
+        stack<char> x, y;
+        for (auto c : s) {
+            if (c == '#') {
+                if (!x.empty()) x.pop();
             }
-            else temp += c;
+            else x.push(c);
         }
 
-        return res;
+        for (auto c : t) {
+            if (c == '#') {
+                if (!y.empty()) y.pop();
+            }
+            else y.push(c);
+        }
+
+        return x == y;
     }
 };
 ```
 
 ### 题面
 
-给出第一个词 `first` 和第二个词 `second`，考虑在某些文本 `text` 中可能以 `"first second third"` 形式出现的情况，其中 `second` 紧随 `first` 出现，`third` 紧随 `second` 出现。
+给定 `s` 和 `t` 两个字符串，当它们分别被输入到空白的文本编辑器后，如果两者相等，返回 `true` 。`#` 代表退格字符。
 
-对于每种这样的情况，将第三个词 "`third`" 添加到答案中，并返回答案。
-
-### 题解
-
-**Method One**: 直接法
-
-- 维护一个栈来记录 `text` 中的单词（在 `text` 后面加一个空格可以遍历所有单词）
-- 走到空格的时候，就检查一下当前的 `temp` 是否满足 `third` 的条件
-- 需注意判断 `third` 时需要将栈恢复原样
-
-## 1128. Number of Equivalent Domino Pairs
-
-```cpp
-class Solution {
-public:
-    int numEquivDominoPairs(vector<vector<int>>& dominoes) {
-        int cnt[110];
-        for (auto i : dominoes) {
-            if (i[0] < i[1]) cnt[i[0] * 10 + i[1]] ++;
-            else cnt[i[1] * 10 + i[0]] ++;
-        }
-
-        int res = 0;
-        for (auto i : cnt) {
-            if (i <= 1) continue;
-            res += i * (i - 1) / 2;
-        }
-
-        return res;
-    }
-};
-```
-
-### 题面
-
-形式上，`dominoes[i] = [a, b]` 与 `dominoes[j] = [c, d]` **等价** 当且仅当 (`a == c` 且 `b == d`) 或者 (`a == d` 且 `b == c`) 。即一张骨牌可以通过旋转 `0` 度或 `180` 度得到另一张多米诺骨牌。
-
-在 `0 <= i < j < dominoes.length` 的前提下，找出满足 `dominoes[i]` 和 `dominoes[j]` 等价的骨牌对 `(i, j)` 的数量。
+**注意：**如果对空文本输入退格字符，文本继续为空。
 
 ### 题解
 
 **Method One**: 直接法
 
-- 对于每张牌的两个数值排序，得到一个唯一值
-- 记录这个值出现的次数，即得到最终的对数
+- 遍历字符串，将其文本记录在栈中
+- 判断两个栈是否相等
