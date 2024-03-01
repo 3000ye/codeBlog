@@ -223,7 +223,7 @@ public:
 
 给定 `s` 和 `t` 两个字符串，当它们分别被输入到空白的文本编辑器后，如果两者相等，返回 `true` 。`#` 代表退格字符。
 
-**注意：**如果对空文本输入退格字符，文本继续为空。
+**注意**：如果对空文本输入退格字符，文本继续为空。
 
 ### 题解
 
@@ -322,6 +322,29 @@ public:
 
 ## 1475. Final Prices With a Special Discount in a Shop
 
+```cpp
+typedef pair<int, int> pii;
+
+class Solution {
+public:
+    vector<int> finalPrices(vector<int>& prices) {
+        stack<pii> stk;  // 递增单调栈
+
+        for (int i = 0, l = prices.size(); i < l; i ++) {
+            if (!stk.empty() and prices[i] <= stk.top().first) {
+                while (!stk.empty() and prices[i] <= stk.top().first) {
+                    prices[stk.top().second] -= prices[i];
+                    stk.pop();
+                }
+            }
+
+            stk.push({prices[i], i});
+        }
+
+        return prices;
+    }
+};
+```
 
 ### 题面
 
@@ -333,3 +356,7 @@ public:
 
 ### 题解
 
+**Method One**: 单调栈
+
+- 维护一个递增的单调栈，并使用 `pair<value, idx>` 记录价格和下标
+- 当有元素弹出时，说明遇到了更小的价格，则修改其价格 `prices[idx]`
