@@ -231,3 +231,105 @@ public:
 
 - 遍历字符串，将其文本记录在栈中
 - 判断两个栈是否相等
+
+## 1021. Remove Outermost Parentheses
+
+```cpp
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        stack<char> stk;
+        string res;
+
+        for (auto c : s) {
+            if (stk.empty()) stk.push(c);
+            else {
+                if (c == '(') {  // stk 必定不为空
+                    res += c;
+                    stk.push(c);
+                }
+                else {
+                    stk.pop();
+                    if (!stk.empty()) res += c;
+                }
+            }
+        }
+
+        return res;
+    }
+};
+```
+
+### 题面
+
+有效括号字符串为空 `""`、`"(" + A + ")"` 或 `A + B` ，其中 `A` 和 `B` 都是有效的括号字符串，`+` 代表字符串的连接。
+
+-   例如，`""`，`"()"`，`"(())()"` 和 `"(()(()))"` 都是有效的括号字符串。
+
+如果有效字符串 `s` 非空，且不存在将其拆分为 `s = A + B` 的方法，我们称其为**原语（primitive）**，其中 `A` 和 `B` 都是非空有效括号字符串。
+
+给出一个非空有效字符串 `s`，考虑将其进行原语化分解，使得：`s = P_1 + P_2 + ... + P_k`，其中 `P_i` 是有效括号字符串原语。
+
+对 `s` 进行原语化分解，删除分解中每个原语字符串的最外层括号，返回 `s` 。
+
+### 题解
+
+**Method One**: 直接法
+
+- 使用栈来维护括号的匹配关系，遍历字符串
+- 如果栈为空则直接入栈
+- 如果 `c = (` ，此时栈不可能为空，入栈，`res += c`
+- 如果 `c = )` ，栈弹出栈头，此时需判断栈是否为空
+    - 如果为空，则说明已经走到括号的最外面
+    - 否则，`res += c`
+
+## 1047. Remove All Adjacent Duplicates In String
+
+```cpp
+class Solution {
+public:
+    string removeDuplicates(string s) {
+        string res;
+
+        for (auto c : s) {
+            if (res.empty()) res.push_back(c);
+            else {
+                if (res.back() == c) {
+                    while (!res.empty() and res.back() == c) res.pop_back();
+                }
+                else res.push_back(c);
+            }
+        }
+
+        return res;
+    }
+};
+```
+
+### 题面
+
+给出由小写字母组成的字符串 `S`，**重复项删除操作**会选择两个相邻且相同的字母，并删除它们。
+
+在 `S` 上反复执行重复项删除操作，直到无法继续删除。
+
+在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。
+
+### 题解
+
+**Method One**: 直接法
+
+- 用 `string` 模拟栈，按题意操作即可
+
+## 1475. Final Prices With a Special Discount in a Shop
+
+
+### 题面
+
+给你一个数组 `prices` ，其中 `prices[i]` 是商店里第 `i` 件商品的价格。
+
+商店里正在进行促销活动，如果你要买第 `i` 件商品，那么你可以得到与 `prices[j]` 相等的折扣，其中 `j` 是满足 `j > i` 且 `prices[j] <= prices[i]` 的 **最小下标** ，如果没有满足条件的 `j` ，你将没有任何折扣。
+
+请你返回一个数组，数组中第 `i` 个元素是折扣后你购买商品 `i` 最终需要支付的价格。
+
+### 题解
+
