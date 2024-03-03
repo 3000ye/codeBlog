@@ -360,3 +360,83 @@ public:
 
 - 维护一个递增的单调栈，并使用 `pair<value, idx>` 记录价格和下标
 - 当有元素弹出时，说明遇到了更小的价格，则修改其价格 `prices[idx]`
+
+## 1544. Make The String Great
+
+```cpp
+class Solution {
+public:
+    string makeGood(string s) {
+        string stk;
+
+        for (auto c : s) {
+            if (stk.empty() or abs(stk.back() - c) != 32) stk.push_back(c);
+            else stk.pop_back();
+        }
+
+        return stk;
+    }
+};
+```
+
+### 题面
+
+给你一个由大小写英文字母组成的字符串 `s` 。
+
+一个整理好的字符串中，两个相邻字符 `s[i]` 和 `s[i+1]`，其中 `0<= i <= s.length-2` ，要满足如下条件:
+
+-   若 `s[i]` 是小写字符，则 `s[i+1]` 不可以是相同的大写字符。
+-   若 `s[i]` 是大写字符，则 `s[i+1]` 不可以是相同的小写字符。
+
+请你将字符串整理好，每次你都可以从字符串中选出满足上述条件的 **两个相邻** 字符并删除，直到字符串整理好为止。
+
+请返回整理好的 **字符串** 。题目保证在给出的约束条件下，测试样例对应的答案是唯一的。
+
+**注意：** 空字符串也属于整理好的字符串，尽管其中没有任何字符。
+
+### 题解
+
+**Method One**: 直接法
+
+- 使用 `string` 来维护答案
+- 遍历 `s` 时按照题意判断即可
+
+## 1598. Crawler Log Folder
+
+```cpp
+class Solution {
+public:
+    int minOperations(vector<string>& logs) {
+        int cnt = 0;
+        for (auto i : logs) {
+            if (i == "../") cnt = max(0, -- cnt);
+            else if (i == "./") continue;
+            else cnt ++;
+        }
+
+        return cnt;
+    }
+};
+```
+
+### 题面
+
+每当用户执行变更文件夹操作时，LeetCode 文件系统都会保存一条日志记录。
+
+下面给出对变更操作的说明：
+
+-   `"../"` ：移动到当前文件夹的父文件夹。如果已经在主文件夹下，则 **继续停留在当前文件夹** 。
+-   `"./"` ：继续停留在当前文件夹**。**
+-   `"x/"` ：移动到名为 `x` 的子文件夹中。题目数据 **保证总是存在文件夹 `x`** 。
+
+给你一个字符串列表 `logs` ，其中 `logs[i]` 是用户在 `i<sup>th</sup>` 步执行的操作。
+
+文件系统启动时位于主文件夹，然后执行 `logs` 中的操作。
+
+执行完所有变更文件夹操作后，请你找出 **返回主文件夹所需的最小步数** 。
+
+### 题解
+
+**Method One**: 直接法
+
+- 直接按照题面模拟即可
