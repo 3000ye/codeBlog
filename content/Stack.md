@@ -440,3 +440,129 @@ public:
 **Method One**: 直接法
 
 - 直接按照题面模拟即可
+
+## 1614. Maximum Nesting Depth of the Parentheses
+
+```cpp
+class Solution {
+public:
+    int maxDepth(string s) {
+        stack<char> stk;
+        int res = 0;
+        for (auto c : s) {
+            if (c != '(' and c != ')') continue;
+            if (stk.empty()) stk.push(c);
+            else {
+                if (stk.top() == '(' and c == ')') stk.pop();
+                else stk.push(c);
+            }
+
+            res = max(res, int(stk.size()));
+        }
+
+        return res;
+    }
+};
+```
+
+### 题面
+
+如果字符串满足以下条件之一，则可以称之为 **有效括号字符串**（**valid parentheses string**，可以简写为 **VPS**）：
+
+-   字符串是一个空字符串 `""`，或者是一个不为 `"("` 或 `")"` 的单字符。
+-   字符串可以写为 `AB`（`A` 与 `B` 字符串连接），其中 `A` 和 `B` 都是 **有效括号字符串** 。
+-   字符串可以写为 `(A)`，其中 `A` 是一个 **有效括号字符串** 。
+
+类似地，可以定义任何有效括号字符串 `S` 的 **嵌套深度** `depth(S)`：
+
+-   `depth("") = 0`
+-   `depth(C) = 0`，其中 `C` 是单个字符的字符串，且该字符不是 `"("` 或者 `")"`
+-   `depth(A + B) = max(depth(A), depth(B))`，其中 `A` 和 `B` 都是 **有效括号字符串**
+-   `depth("(" + A + ")") = 1 + depth(A)`，其中 `A` 是一个 **有效括号字符串**
+
+例如：`""`、`"()()"`、`"()(()())"` 都是 **有效括号字符串**（嵌套深度分别为 0、1、2），而 `")("` 、`"(()"` 都不是 **有效括号字符串** 。
+
+给你一个 **有效括号字符串** `s`，返回该字符串的 `s` **嵌套深度** 。
+
+### 题解
+
+**Method One**: 直接法
+
+- 使用栈维护合法的括号序列
+- 每次遍历的时候更新一下最大深度
+
+## 1700. Number of Students Unable to Eat Lunch
+
+```cpp
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        int cnt[2];
+        for (auto s : students) cnt[s] ++;
+        for (auto s : sandwiches) {
+            if (cnt[s] == 0) break;
+            else cnt[s] --;
+        }
+
+        return cnt[0] + cnt[1];
+    }
+};
+```
+
+### 题面
+
+学校的自助午餐提供圆形和方形的三明治，分别用数字 `0` 和 `1` 表示。所有学生站在一个队列里，每个学生要么喜欢圆形的要么喜欢方形的。  
+餐厅里三明治的数量与学生的数量相同。所有三明治都放在一个 **栈** 里，每一轮：
+
+-   如果队列最前面的学生 **喜欢** 栈顶的三明治，那么会 **拿走它** 并离开队列。
+-   否则，这名学生会 **放弃这个三明治** 并回到队列的尾部。
+
+这个过程会一直持续到队列里所有学生都不喜欢栈顶的三明治为止。
+
+给你两个整数数组 `students` 和 `sandwiches` ，其中 `sandwiches[i]` 是栈里面第 `i<sup></sup>` 个三明治的类型（`i = 0` 是栈的顶部）， `students[j]` 是初始队列里第 `j<sup></sup>` 名学生对三明治的喜好（`j = 0` 是队列的最开始位置）。请你返回无法吃午餐的学生数量。
+
+### 题解
+
+**Method One**: 直接法
+
+- 分别记录不同喜好的学生人数
+- 遍历三明治列表，只要喜欢当前三明治的人数为 0 则退出
+- 返回剩余人数总和
+
+## 2696. Minimum String Length After Removing Substrings
+
+```cpp
+class Solution {
+public:
+    int minLength(string s) {
+        string stk;
+
+        for (auto c : s) {
+            if (stk.empty()) stk.push_back(c);
+            else {
+                if (c == 'B' and stk.back() == 'A') stk.pop_back();
+                else if (c == 'D' and stk.back() == 'C') stk.pop_back();
+                else stk.push_back(c);
+            }
+        }
+
+        return stk.size();
+    }
+};
+```
+
+### 题面
+
+给你一个仅由 **大写** 英文字符组成的字符串 `s` 。
+
+你可以对此字符串执行一些操作，在每一步操作中，你可以从 `s` 中删除 **任一个** `"AB"` 或 `"CD"` 子字符串。
+
+通过执行操作，删除所有 `"AB"` 和 `"CD"` 子串，返回可获得的最终字符串的 **最小** 可能长度。
+
+**注意**，删除子串后，重新连接出的字符串可能会产生新的 `"AB"` 或 `"CD"` 子串。
+
+### 题解
+
+**Method One**: 直接法
+
+- 使用 `string` 模拟栈来维护答案
