@@ -36,7 +36,7 @@ public:
 - 用一个数组记录每个字符出现的次数
 - 遍历字符串，找到第一个只出现一次的字符
 
-# 933. Number of Recent Calls
+## 933. Number of Recent Calls
 
 ```cpp
 class RecentCounter {
